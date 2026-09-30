@@ -35,23 +35,23 @@ Por ejemplo en http://172.18.0.2/wp-includes la página pasa a mostrar la siguie
 
 En la  http://172.18.0.2/wp-admin nos encontramos con:
 
-![wp-admin](Pasted%20image%2020260920190053.png)
+![wp-admin](Pasted%20image%2020260929190053.png)
 
 Intentamos hacer un bypass del login, pero el resultado fue negativo, como lo adjuntamos a continuación:
 
-![Bypass fallido](Pasted%20image%2020260920190159.png)
+![Bypass fallido](Pasted%20image%2020260929190159.png)
 
 Proseguimos con http://172.18.0.2/backups donde nos muestra la información:
 
-![Backups](Pasted%20image%2020260920190306.png)
+![Backups](Pasted%20image%2020260929190306.png)
 
 Logramos obtener el zip que contiene la página en ese apartado y proseguimos a ver que contiene
 
-![Contenido del backup](Pasted%20image%2020260920190404.png)
+![Contenido del backup](Pasted%20image%2020260929190404.png)
 
 *Realizamos el comando unzip sobre el archivo y obtenemos lo siguiente:*
 
-![Archivos extraídos](Pasted%20image%2020260920190929.png)
+![Archivos extraídos](Pasted%20image%2020260929190929.png)
 
 ---
 Usuario: developer
@@ -63,14 +63,14 @@ Vamos a probar si con dicho usuario y contraseña podemos ingresar en el sector 
 
 Logramos ingresar al sitio para continuar la evaluación:
 
-![Login](Pasted%20image%2020260920191200.png)
+![Login](Pasted%20image%2020260929191200.png)
 
 
 Nos encontramos con nuevas opciones dentro de la página principal.
 
-![Panel principal](Pasted%20image%2020260920191251.png)
+![Panel principal](Pasted%20image%2020260929191251.png)
 
-![Opciones](Pasted%20image%2020260920191326.png)
+![Opciones](Pasted%20image%2020260929191326.png)
 
 ---
 
@@ -105,15 +105,15 @@ nc -lvnp 4444
 
 En ese instante al activar el plugin la página quedó en este loop:
 
-![Plugin activado](Pasted%20image%2020260920201815.png)
+![Plugin activado](Pasted%20image%2020260929201815.png)
 
 Por otro lado en la terminal que pusimos en escucha el puerto, nos daba los primeros indicios de conexión:
 
-![Reverse shell](Pasted%20image%2020260920201927.png)
+![Reverse shell](Pasted%20image%2020260929201927.png)
 
 Bueno en está instancia dentro de una reverse shell, podemos operar buscando como escalar privilegios, de está manera encontramos lo siguiente:
 
-![Escalada inicial](Pasted%20image%2020260920202047.png)
+![Escalada inicial](Pasted%20image%2020260929202047.png)
 
 Existe un usuario *rafa* el cual tiene privilegios de ejecutar el /usr/bin/find, por lo cual nos vamos a la página de GTFObins donde encontramos la siguiente manera de escalar dicho privilegio:
 
@@ -124,7 +124,7 @@ sudo -u rafa find . -exec /bin/sh \; -quit
 Obteniendo entonces:
 ---
 
-![Usuario rafa](Pasted%20image%2020260920202256.png)
+![Usuario rafa](Pasted%20image%2020260929202256.png)
 
 Cuando nos convertimos en *rafa* nos mostró que aún él no tenía todos los permisos para escalar directo a ==root==
 
@@ -142,14 +142,14 @@ debugfs:  !/bin/bash
 
 Una vez nos convertimos en *ruben*, vemos con ==sudo -l==:
 
-![sudo de ruben](Pasted%20image%2020260920202834.png)
+![sudo de ruben](Pasted%20image%2020260929202834.png)
 
 ---
 Lo hallado es un script, si se observa bien está alojado en /opt/penguin.sh
 
 Acá lo que hacemos es ver el contenido del mismo
 
-![penguin.sh](Pasted%20image%2020260920203000.png)
+![penguin.sh](Pasted%20image%2020260929203000.png)
 
 ---
 
@@ -179,6 +179,6 @@ Consultamos a la IA sobre la definición de lo que hace ejecutar esa respuesta q
 
 Entonces luego nos devuelve:
 
-![Root](Pasted%20image%2020260920203445.png)
+![Root](Pasted%20image%2020260929203445.png)
 
 Corroboramos y somos ==root==!!
